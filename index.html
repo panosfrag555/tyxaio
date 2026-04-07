@@ -29,11 +29,12 @@
       align-items: center;
       justify-content: center;
       background: white;
-      color: black; /* εδώ αλλάζεις */
+      color: black;
       font-size: 22px;
       z-index: 10;
       text-align: center;
       padding: 20px;
+      cursor: pointer;
     }
 
     #start.hidden {
@@ -46,8 +47,9 @@
 
 <div id="start">Αγγίξτε για προβολή μενού</div>
 
-<video id="video" muted playsinline webkit-playsinline preload="auto">
-  <source src="Presentation.mp4" type="video/mp4">
+<video id="video" controls muted playsinline preload="auto">
+  <!-- ΣΗΜΑΝΤΙΚΟ: το σωστό path -->
+  <source src="/tyxaio/Presentation.mp4" type="video/mp4">
 </video>
 
 <script>
@@ -55,12 +57,17 @@
   const video = document.getElementById('video');
 
   function playVideo() {
-    video.play();
+    video.play().catch(err => console.log(err));
     start.classList.add('hidden');
   }
 
   start.addEventListener('click', playVideo);
   start.addEventListener('touchstart', playVideo, { passive: true });
+
+  video.addEventListener('error', () => {
+    console.log('Video error:', video.error);
+    alert("Το video δεν φορτώνει. Έλεγξε το path ή το αρχείο.");
+  });
 </script>
 
 </body>
