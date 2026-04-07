@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu</title>
+
   <style>
     html, body {
       margin: 0;
@@ -19,14 +20,31 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      background: black;
     }
   </style>
 </head>
+
 <body>
-  <video autoplay muted playsinline webkit-playsinline>
+
+  <video id="video" muted playsinline webkit-playsinline autoplay>
     <source src="Presentation1.mp4" type="video/mp4">
-    Το βίντεο δεν υποστηρίζεται από τη συσκευή σου.
   </video>
+
+  <script>
+    const v = document.getElementById("video");
+
+    // force play προσπάθεια
+    const tryPlay = () => {
+      v.play().catch(() => {});
+    };
+
+    // παίζει μόλις φορτώσει
+    window.addEventListener("load", tryPlay);
+
+    // fallback (touch)
+    document.addEventListener("touchstart", tryPlay, { once: true });
+    document.addEventListener("click", tryPlay, { once: true });
+  </script>
+
 </body>
 </html>
